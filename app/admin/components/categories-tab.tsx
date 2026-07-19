@@ -71,7 +71,7 @@ export function CategoriesTab({ categories, onCategoriesChange }: CategoriesTabP
       onCategoriesChange();
       toast.success('Categories reordered');
     } catch(e: any) {
-      toast.error('Failed to reorder categories');
+      console.error(e); toast.error('Failed to reorder categories');
     }
   };
 
