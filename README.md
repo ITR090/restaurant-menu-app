@@ -1,4 +1,4 @@
-<img width="1200" height="475" alt="image" src="https://github.com/user-attachments/assets/c1c43e22-0dbe-44ca-9e5c-f63950c604f5" /><img width="1200" height="475" alt="image" src="https://github.com/user-attachments/assets/7aecbc31-3e88-408e-83d0-9cd2ae4440ff" />
+<img width="1200" height="475" alt="image" src="https://github.com/user-attachments/assets/c1c43e22-0dbe-44ca-9e5c-f63950c604f5" />
 
 
 # Restaurant Ordering & Management System
