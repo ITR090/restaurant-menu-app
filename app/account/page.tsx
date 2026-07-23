@@ -4,32 +4,41 @@ import { useAuth } from '@/components/auth-provider';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { User, Mail, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Navbar } from '@/components/Navbar';
 
 export default function AccountPage() {
   const { user, loading, signOut } = useAuth();
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-16 max-w-4xl flex justify-center">
-        <div className="animate-spin w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full"></div>
+      <div className="min-h-screen bg-[#f8fafc]">
+        <Navbar />
+        <div className="container mx-auto px-4 py-16 max-w-4xl flex justify-center">
+          <div className="animate-spin w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full"></div>
+        </div>
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className="container mx-auto px-4 py-16 max-w-4xl text-center">
-        <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-          <User className="w-8 h-8 text-muted-foreground" />
+      <div className="min-h-screen bg-[#f8fafc]">
+        <Navbar />
+        <div className="container mx-auto px-4 py-16 max-w-4xl text-center">
+          <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+            <User className="w-8 h-8 text-muted-foreground" />
+          </div>
+          <h2 className="text-xl font-semibold mb-2">Sign in to view account</h2>
+          <p className="text-muted-foreground mb-6">Please sign in to view your account details.</p>
         </div>
-        <h2 className="text-xl font-semibold mb-2">Sign in to view account</h2>
-        <p className="text-muted-foreground mb-6">Please sign in to view your account details.</p>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-2xl">
+    <div className="min-h-screen bg-[#f8fafc]">
+      <Navbar />
+      <div className="container mx-auto px-4 py-8 max-w-2xl">
       <div className="flex items-center gap-3 mb-8">
         <User className="w-8 h-8" />
         <h1 className="text-3xl font-bold tracking-tight">My Account</h1>
@@ -58,6 +67,7 @@ export default function AccountPage() {
           </div>
         </CardContent>
       </Card>
+    </div>
     </div>
   );
 }

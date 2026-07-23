@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useAuth } from '@/components/auth-provider';
-import { ShoppingCart, ClipboardList, User as UserIcon, LogIn, LogOut } from 'lucide-react';
+import { ShoppingCart, ClipboardList, User as UserIcon, LogIn, LogOut, Calendar } from 'lucide-react';
 import { useCartStore } from '@/lib/store';
 import { useEffect, useState } from 'react';
 
@@ -36,6 +36,10 @@ export function Navbar() {
           
           {user ? (
             <>
+              <Link href="/reservation" className="flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
+                <Calendar className="w-4 h-4" />
+                Make Reservation
+              </Link>
               <Link href="/orders" className="flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
                 <ClipboardList className="w-4 h-4" />
                 My Orders

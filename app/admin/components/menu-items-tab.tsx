@@ -1,10 +1,12 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+
+import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import { Category, MenuItem, getMenuItems, addMenuItem, updateMenuItem } from '@/lib/firebase';
+import { Category, MenuItem, getMenuItems, addMenuItem, updateMenuItem, deleteMenuItem } from '@/lib/firebase';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
@@ -23,6 +25,8 @@ export function MenuItemsTab({ categories }: MenuItemsTabProps) {
   const [newItemDesc, setNewItemDesc] = useState('');
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<MenuItem | null>(null);
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [editItemName, setEditItemName] = useState('');
   const [editItemPrice, setEditItemPrice] = useState('');
@@ -66,6 +70,25 @@ export function MenuItemsTab({ categories }: MenuItemsTabProps) {
     } catch (e: any) {
       console.log(e);
       toast.error(`Failed to add menu item: ${e.message}`);
+    }
+  };
+
+  const handleDeleteClick = (item: MenuItem) => {
+    setItemToDelete(item);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!itemToDelete) return;
+    try {
+      await deleteMenuItem(itemToDelete.id);
+      toast.success('Menu item deleted');
+      setIsDeleteDialogOpen(false);
+      setItemToDelete(null);
+      loadItems();
+    } catch (e: any) {
+      console.log(e);
+      toast.error(`Failed to delete menu item: ${e.message}`);
     }
   };
 
@@ -192,6 +215,20 @@ export function MenuItemsTab({ categories }: MenuItemsTabProps) {
             </div>
           </DialogContent>
         </Dialog>
+        <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Confirm Delete</DialogTitle>
+            </DialogHeader>
+            <div className="py-4">
+              <p>Are you sure you want to delete {itemToDelete?.name}? This action cannot be undone.</p>
+            </div>
+            <div className="flex justify-end gap-3">
+              <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>Cancel</Button>
+              <Button onClick={confirmDelete} className="bg-red-600 text-white hover:bg-red-700">Delete</Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
       
       <div className="mb-6 flex items-center gap-3">
@@ -231,7 +268,12 @@ export function MenuItemsTab({ categories }: MenuItemsTabProps) {
                   <td className="px-6 py-4 text-[#64748b]">{cat?.name || 'Unknown'}</td>
                   <td className="px-6 py-4 text-[#0f172a] font-medium">${item.price.toFixed(2)}</td>
                   <td className="px-6 py-4 text-right">
-                    <button onClick={() => handleEditClick(item)} className="text-indigo-600 font-semibold hover:text-indigo-800">Edit</button>
+                    <div className="flex items-center justify-end gap-3">
+                      <button onClick={() => handleEditClick(item)} className="text-indigo-600 font-semibold hover:text-indigo-800">Edit</button>
+                      <button onClick={() => handleDeleteClick(item)} className="text-red-500 hover:text-red-700" title="Delete">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );

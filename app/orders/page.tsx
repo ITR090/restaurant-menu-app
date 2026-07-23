@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ClipboardList, Clock } from 'lucide-react';
+import { Navbar } from '@/components/Navbar';
 
 export default function OrdersPage() {
   const { user, loading: authLoading } = useAuth();
@@ -34,26 +35,34 @@ export default function OrdersPage() {
 
   if (authLoading || loading) {
     return (
-      <div className="container mx-auto px-4 py-16 max-w-4xl flex justify-center">
-        <div className="animate-spin w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full"></div>
+      <div className="min-h-screen bg-[#f8fafc]">
+        <Navbar />
+        <div className="container mx-auto px-4 py-16 max-w-4xl flex justify-center">
+          <div className="animate-spin w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full"></div>
+        </div>
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className="container mx-auto px-4 py-16 max-w-4xl text-center">
-        <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-          <ClipboardList className="w-8 h-8 text-muted-foreground" />
+      <div className="min-h-screen bg-[#f8fafc]">
+        <Navbar />
+        <div className="container mx-auto px-4 py-16 max-w-4xl text-center">
+          <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+            <ClipboardList className="w-8 h-8 text-muted-foreground" />
+          </div>
+          <h2 className="text-xl font-semibold mb-2">Sign in to view orders</h2>
+          <p className="text-muted-foreground mb-6">Please sign in to see your order history.</p>
         </div>
-        <h2 className="text-xl font-semibold mb-2">Sign in to view orders</h2>
-        <p className="text-muted-foreground mb-6">Please sign in to see your order history.</p>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="min-h-screen bg-[#f8fafc]">
+      <Navbar />
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="flex items-center gap-3 mb-8">
         <ClipboardList className="w-8 h-8" />
         <h1 className="text-3xl font-bold tracking-tight">My Orders</h1>
@@ -115,6 +124,7 @@ export default function OrdersPage() {
           ))}
         </div>
       )}
+    </div>
     </div>
   );
 }

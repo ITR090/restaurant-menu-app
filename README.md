@@ -1,5 +1,6 @@
-<img width="1200" height="475" alt="image" src="https://github.com/user-attachments/assets/c1c43e22-0dbe-44ca-9e5c-f63950c604f5" />
-
+<p align="center">
+  <img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_logo_wordmark.max-1000x1000.png" alt="Google AI" width="200" />
+</p>
 
 # Restaurant Ordering & Management System
 

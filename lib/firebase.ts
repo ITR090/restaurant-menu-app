@@ -1,5 +1,5 @@
 import { initializeApp, getApps } from 'firebase/app';
-import { getFirestore, collection, getDocs, addDoc, doc, setDoc, serverTimestamp, updateDoc, getDoc, query, where, orderBy, writeBatch } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, addDoc, doc, setDoc, serverTimestamp, updateDoc, getDoc, deleteDoc, query, where, orderBy, writeBatch } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged, User, signInWithPopup, GoogleAuthProvider, signOut as firebaseSignOut } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -79,6 +79,10 @@ export async function updateMenuItem(id: string, item: Partial<Omit<MenuItem, 'i
     ...item,
     updatedAt: serverTimestamp()
   });
+}
+
+export async function deleteMenuItem(id: string): Promise<void> {
+  await deleteDoc(doc(db, 'menuItems', id));
 }
 
 export async function getAboutInfo(): Promise<AboutInfo | null> {
@@ -175,4 +179,25 @@ export async function updateCategoriesOrder(categories: {id: string, order: numb
     });
   }
   await batch.commit();
+}
+
+export interface Reservation {
+  id?: string;
+  userId: string;
+  name: string;
+  email: string;
+  phone: string;
+  date: string;
+  time: string;
+  guests: number;
+  status: 'pending' | 'confirmed' | 'cancelled';
+  createdAt?: any;
+}
+
+export async function createReservation(reservation: Reservation): Promise<string> {
+  const docRef = await addDoc(collection(db, 'reservations'), {
+    ...reservation,
+    createdAt: serverTimestamp()
+  });
+  return docRef.id;
 }

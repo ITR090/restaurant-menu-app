@@ -1,6 +1,6 @@
 'use client';
 
-import { Category, MenuItem } from '@/lib/api';
+import { Category, MenuItem } from '@/lib/firebase';
 import { MenuItemCard } from './MenuItemCard';
 
 interface MenuSectionProps {
