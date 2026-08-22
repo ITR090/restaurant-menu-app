@@ -1,6 +1,6 @@
 import { initializeApp, getApps } from 'firebase/app';
 import { getFirestore, collection, getDocs, addDoc, doc, setDoc, serverTimestamp, updateDoc, getDoc, deleteDoc, query, where, orderBy, writeBatch } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged, User, signInWithPopup, GoogleAuthProvider, signOut as firebaseSignOut } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, User, signInWithPopup, GoogleAuthProvider, signOut as firebaseSignOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -119,6 +119,14 @@ export async function createUserDoc(uid: string, role: string) {
 export async function signInWithGoogle() {
   const provider = new GoogleAuthProvider();
   return await signInWithPopup(auth, provider);
+}
+
+export async function signInWithEmail(email: string, pass: string) {
+  return await signInWithEmailAndPassword(auth, email, pass);
+}
+
+export async function signUpWithEmail(email: string, pass: string) {
+  return await createUserWithEmailAndPassword(auth, email, pass);
 }
 
 export async function logOut() {
